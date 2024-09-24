@@ -11,7 +11,7 @@ Resources:
 - https://github.com/microsoft/vscode/blob/f0417069c62e20f3667506f4b7e53ca0004b4e3e/src/vscode-dts/vscode.d.ts#L10743-L10794
 */
 
-const terminalProfileName = "Shell-Integration-Example"
+const terminalProfileName = "Shell-Integration-Problems"
 
 export function activate(context: vscode.ExtensionContext) {
 	const trackedTerminals: Set<vscode.Terminal> = new Set()
@@ -47,17 +47,20 @@ export function activate(context: vscode.ExtensionContext) {
 	}
 
 	// Command to run a command in a new terminal
-	const runInNewTerminal = vscode.commands.registerCommand("shell-integration-example.runInNewTerminal", async () => {
-		const input = await vscode.window.showInputBox({ prompt: "Enter command to run in new terminal" })
-		if (input) {
-			const terminal = vscode.window.createTerminal("New Terminal")
-			runCommand(terminal, input)
+	const runInNewTerminal = vscode.commands.registerCommand(
+		"shell-integration-problems.runInNewTerminal",
+		async () => {
+			const input = await vscode.window.showInputBox({ prompt: "Enter command to run in new terminal" })
+			if (input) {
+				const terminal = vscode.window.createTerminal("New Terminal")
+				runCommand(terminal, input)
+			}
 		}
-	})
+	)
 
 	// Command to run a command in an existing terminal
 	const runInExistingTerminal = vscode.commands.registerCommand(
-		"shell-integration-example.runInExistingTerminal",
+		"shell-integration-problems.runInExistingTerminal",
 		async () => {
 			const terminal = trackedTerminals.size > 0 ? Array.from(trackedTerminals).pop() : undefined
 			if (terminal) {
@@ -75,7 +78,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Terminal profile provider
 	context.subscriptions.push(
-		vscode.window.registerTerminalProfileProvider("shell-integration-example.profile", {
+		vscode.window.registerTerminalProfileProvider("shell-integration-problems.profile", {
 			provideTerminalProfile(token: vscode.CancellationToken) {
 				return {
 					options: {
@@ -156,9 +159,9 @@ export function activate(context: vscode.ExtensionContext) {
 		})
 	)
 
-	console.log("Shell integration example extension activated")
+	console.log("Shell-Integration-Problems extension activated")
 }
 
 export function deactivate() {
-	console.log("Shell integration example extension deactivated")
+	console.log("Shell-Integration-Problems extension deactivated")
 }

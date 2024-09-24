@@ -14,12 +14,12 @@
   "contributes": {
     "commands": [
       {
-        "command": "shell-integration-example.runInNewTerminal",
+        "command": "shell-integration-problems.runInNewTerminal",
         "title": "Run in New Terminal",
         "category": "Shell-Integration-Problems"
       },
       {
-        "command": "shell-integration-example.runInExistingTerminal",
+        "command": "shell-integration-problems.runInExistingTerminal",
         "title": "Run in Existing Terminal",
         "category": "Shell-Integration-Problems"
       }
