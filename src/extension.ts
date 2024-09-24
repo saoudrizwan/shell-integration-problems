@@ -14,93 +14,63 @@ Resources:
 const terminalProfileName = "Shell-Integration-Problems"
 
 export function activate(context: vscode.ExtensionContext) {
-	const trackedTerminals: Set<vscode.Terminal> = new Set()
+	let lastUsedTerminal: vscode.Terminal | undefined
 
-	/*
-	const commandLine = 'echo "Hello world"'
-	if (term.shellIntegration) {
-		const execution = shellIntegration.executeCommand({ commandLine })
-		window.onDidEndTerminalShellExecution((event) => {
-			if (event.execution === execution) {
-				console.log(`Command exited with code ${event.exitCode}`)
+	async function runCommand(terminal: vscode.Terminal, command: string): Promise<void> {
+		terminal.show()
+		try {
+			console.log("Waiting for shell integration...")
+			await waitFor(() => !!terminal.shellIntegration, { interval: 100, timeout: 10_000 })
+			console.log("Shell integration available")
+			const execution = terminal.shellIntegration!.executeCommand(command)
+			console.log({ execution })
+			const stream = execution.read()
+			for await (const chunk of stream) {
+				console.log({ chunk })
 			}
-		})
-	} else {
-		term.sendText(commandLine)
-		// Without shell integration, we can't know when the command has finished or what the
-		// exit code was.
-	}
-	*/
-
-	function runCommand(terminal: vscode.Terminal, command: string): void {
-		if (terminal.shellIntegration) {
-			const execution = terminal.shellIntegration.executeCommand(command)
-			vscode.window.onDidEndTerminalShellExecution((event) => {
-				if (event.execution === execution) {
-					console.log(`Command "${command}" exited with code ${event.exitCode}`)
-				}
-			})
-		} else {
+		} catch (error) {
+			console.error("Timed out waiting for shell integration, falling back to sendText")
+		} finally {
 			terminal.sendText(command)
 			console.log(`Command "${command}" sent to terminal without shell integration`)
+			lastUsedTerminal = terminal
 		}
 	}
 
-	// Command to run a command in a new terminal
+	// Run a command in a new terminal
 	const runInNewTerminal = vscode.commands.registerCommand(
 		"shell-integration-problems.runInNewTerminal",
 		async () => {
 			const input = await vscode.window.showInputBox({ prompt: "Enter command to run in new terminal" })
 			if (input) {
-				const terminal = vscode.window.createTerminal("New Terminal")
+				const terminal = vscode.window.createTerminal({
+					name: terminalProfileName,
+					iconPath: new vscode.ThemeIcon("robot"),
+				})
 				runCommand(terminal, input)
 			}
 		}
 	)
 
-	// Command to run a command in an existing terminal
-	const runInExistingTerminal = vscode.commands.registerCommand(
-		"shell-integration-problems.runInExistingTerminal",
+	// Run a command in an existing terminal
+	const runInLastUsedTerminal = vscode.commands.registerCommand(
+		"shell-integration-problems.runInLastUsedTerminal",
 		async () => {
-			const terminal = trackedTerminals.size > 0 ? Array.from(trackedTerminals).pop() : undefined
-			if (terminal) {
-				const input = await vscode.window.showInputBox({ prompt: "Enter command to run in existing terminal" })
+			if (lastUsedTerminal) {
+				const input = await vscode.window.showInputBox({ prompt: "Enter command to run in last used terminal" })
 				if (input) {
-					runCommand(terminal, input)
+					runCommand(lastUsedTerminal, input)
 				}
 			} else {
-				console.log("No active terminal found")
+				console.error("No terminal found")
 			}
 		}
 	)
 
-	context.subscriptions.push(runInNewTerminal, runInExistingTerminal)
+	context.subscriptions.push(runInNewTerminal, runInLastUsedTerminal)
 
-	// Terminal profile provider
-	context.subscriptions.push(
-		vscode.window.registerTerminalProfileProvider("shell-integration-problems.profile", {
-			provideTerminalProfile(token: vscode.CancellationToken) {
-				return {
-					options: {
-						name: terminalProfileName,
-					},
-				}
-			},
-		})
-	)
+	// Terminal Lifecycle
 
-	// Shell integration change event
-	context.subscriptions.push(
-		vscode.window.onDidChangeTerminalShellIntegration((e) => {
-			console.log(`Shell integration changed for terminal: ${e.terminal.name}`)
-			if (e.terminal.name === terminalProfileName && !trackedTerminals.has(e.terminal)) {
-				trackedTerminals.add(e.terminal)
-				console.log(`Terminal ${e.terminal.name} is now tracked`)
-			}
-		})
-	)
-
-	// Terminal opened event
 	context.subscriptions.push(
 		vscode.window.onDidOpenTerminal((terminal) => {
 			console.log(`Terminal opened: ${terminal.name}`)
@@ -108,7 +78,6 @@ export function activate(context: vscode.ExtensionContext) {
 		})
 	)
 
-	// Terminal closed event
 	context.subscriptions.push(
 		vscode.window.onDidCloseTerminal((terminal) => {
 			console.log(`Terminal closed: ${terminal.name}`)
@@ -119,32 +88,41 @@ export function activate(context: vscode.ExtensionContext) {
 		})
 	)
 
-	// Active terminal changed event
-	context.subscriptions.push(
-		vscode.window.onDidChangeActiveTerminal((terminal) => {
-			console.log(`Active terminal changed: ${terminal ? terminal.name : "undefined"}`)
-		})
-	)
+	// Shell Integration
 
-	// Terminal state changed event
 	context.subscriptions.push(
-		vscode.window.onDidChangeTerminalState((terminal) => {
-			console.log(
-				`Terminal state changed: ${terminal.name}, State: ${
-					terminal.state.isInteractedWith ? "Interacted" : "Not Interacted"
-				}`
-			)
-		})
-	)
-
-	// Shell execution events
-	context.subscriptions.push(
-		vscode.window.onDidStartTerminalShellExecution((event) => {
+		/**
+		 * This will be fired when a terminal command is started. This event will fire only when
+		 * [shell integration](https://code.visualstudio.com/docs/terminal/shell-integration) is
+		 * activated for the terminal.
+		 */
+		vscode.window.onDidStartTerminalShellExecution(async (event) => {
+			const stream = event.execution.read()
+			for await (const chunk of stream) {
+				console.log({ chunk })
+			}
 			console.log(`Shell execution started in terminal: ${event.terminal.name}`)
 		})
 	)
 
 	context.subscriptions.push(
+		/**
+		 * Fires when shell integration activates or one of its properties changes in a terminal.
+		 */
+		vscode.window.onDidChangeTerminalShellIntegration((event) => {
+			console.log(`Shell integration changed for terminal: ${event.terminal.name}`)
+			if (event.terminal.name === terminalProfileName) {
+				console.log(`Terminal ${event.terminal.name} is now tracked`)
+			}
+		})
+	)
+
+	context.subscriptions.push(
+		/**
+		 * This will be fired when a terminal command is ended. This event will fire only when
+		 * [shell integration](https://code.visualstudio.com/docs/terminal/shell-integration) is
+		 * activated for the terminal.
+		 */
 		vscode.window.onDidEndTerminalShellExecution((event) => {
 			console.log(
 				`Shell execution ended in terminal:`,
@@ -160,6 +138,36 @@ export function activate(context: vscode.ExtensionContext) {
 	)
 
 	console.log("Shell-Integration-Problems extension activated")
+}
+
+/**
+ * Waits for a condition to be true, checking at regular intervals.
+ * @param condition A function that returns a boolean or a Promise<boolean>.
+ * @param options.interval The interval between checks in milliseconds.
+ * @param options.timeout The maximum time to wait in milliseconds.
+ * @returns A Promise that resolves when the condition is true, or rejects on timeout.
+ */
+function waitFor(
+	condition: () => boolean | Promise<boolean>,
+	options: { interval: number; timeout: number }
+): Promise<void> {
+	const { interval, timeout } = options
+	if (interval === undefined || timeout === undefined) {
+		throw new Error("Both interval and timeout must be provided")
+	}
+	return new Promise((resolve, reject) => {
+		const startTime = Date.now()
+		const check = async () => {
+			if (await condition()) {
+				resolve()
+			} else if (Date.now() - startTime >= timeout) {
+				reject(new Error("Timeout waiting for condition"))
+			} else {
+				setTimeout(check, interval)
+			}
+		}
+		check()
+	})
 }
 
 export function deactivate() {

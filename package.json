@@ -19,8 +19,8 @@
         "category": "Shell-Integration-Problems"
       },
       {
-        "command": "shell-integration-problems.runInExistingTerminal",
-        "title": "Run in Existing Terminal",
+        "command": "shell-integration-problems.runInLastUsedTerminal",
+        "title": "Run in Last Used Terminal",
         "category": "Shell-Integration-Problems"
       }
     ]
