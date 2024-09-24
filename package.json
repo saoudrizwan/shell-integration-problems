@@ -16,12 +16,12 @@
       {
         "command": "shell-integration-problems.runInNewTerminal",
         "title": "Run in New Terminal",
-        "category": "Shell-Integration-Problems"
+        "category": "shell-integration-problems"
       },
       {
         "command": "shell-integration-problems.runInLastUsedTerminal",
         "title": "Run in Last Used Terminal",
-        "category": "Shell-Integration-Problems"
+        "category": "shell-integration-problems"
       }
     ]
   },

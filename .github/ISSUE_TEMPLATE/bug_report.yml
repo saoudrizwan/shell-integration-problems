@@ -1,0 +1,109 @@
+name: Bug Report
+description: File a bug report for Shell Integration Problems
+labels: ["bug"]
+body:
+    - type: markdown
+      attributes:
+          value: |
+              Thanks for taking the time to fill out this bug report!
+    - type: input
+      id: vscode-version
+      attributes:
+          label: VSCode Version
+          description: What version of VSCode are you running?
+          placeholder: e.g., 1.93.0
+      validations:
+          required: true
+    - type: input
+      id: os
+      attributes:
+          label: Operating System
+          description: What operating system are you using?
+          placeholder: e.g., Windows 10, macOS 12.6, Ubuntu 22.04
+      validations:
+          required: true
+    - type: input
+      id: shell
+      attributes:
+          label: Shell
+          description: What shell are you using?
+          placeholder: e.g., PowerShell, Bash, Zsh
+      validations:
+          required: true
+    - type: input
+      id: shell-version
+      attributes:
+          label: Shell Version
+          description: What version of the shell are you using?
+          placeholder: e.g., PowerShell 7.3.1, Bash 5.1.16, Zsh 5.8.1
+      validations:
+          required: true
+    - type: textarea
+      id: commands-run
+      attributes:
+          label: Commands Run
+          description: What command(s) did you run using the extension?
+          placeholder: |
+              e.g., 
+              1. shell-integration-problems.runInNewTerminal
+              Command: echo "Hello, World!"
+              2. shell-integration-problems.runInLastUsedTerminal
+              Command: ls -la
+      validations:
+          required: true
+    - type: textarea
+      id: command-results
+      attributes:
+          label: Command Results
+          description: Please paste the console logs from the extension.ts file for the commands you ran.
+          placeholder: |
+              e.g.,
+              Waiting for shell integration...
+              Shell integration available
+              { execution: ... }
+              { chunk: ... }
+              Shell execution started in terminal: shell-integration-problems
+              Shell execution ended in terminal: shell-integration-problems echo "Hello, World!" 0
+              Exit code: 0
+          render: shell
+      validations:
+          required: true
+    - type: textarea
+      id: what-happened
+      attributes:
+          label: What happened?
+          description: Also tell us, what did you expect to happen?
+          placeholder: Tell us what you see!
+      validations:
+          required: true
+    - type: textarea
+      id: reproduction-steps
+      attributes:
+          label: Steps to reproduce
+          description: How can we reproduce this issue?
+          placeholder: |
+              1. Go to '...'
+              2. Click on '....'
+              3. Scroll down to '....'
+              4. See error
+      validations:
+          required: true
+    - type: textarea
+      id: logs
+      attributes:
+          label: Additional log output
+          description: Please copy and paste any additional relevant log output. This will be automatically formatted into code, so no need for backticks.
+          render: shell
+    - type: textarea
+      id: additional-context
+      attributes:
+          label: Additional context
+          description: Add any other context about the problem here.
+    - type: checkboxes
+      id: terms
+      attributes:
+          label: Code of Conduct
+          description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com)
+          options:
+              - label: I agree to follow this project's Code of Conduct
+                required: true

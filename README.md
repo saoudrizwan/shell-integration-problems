@@ -1,71 +1,59 @@
-# shell-integration-problems README
+# Shell Integration Problems
 
-This is the README for your extension "shell-integration-problems". After writing up a brief description, we recommend including the following sections.
+This repository is designed to help reproduce and report issues with VSCode's new Shell Integration API. It's particularly useful for users of the Claude Dev extension who are experiencing problems related to shell integration.
 
-## Features
+## Purpose
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+The main goals of this repository are:
 
-For example if there is an image subfolder under your extension project workspace:
+1. To provide a minimal reproducible environment for shell integration issues.
+2. To help the VSCode team debug and fix problems with the Shell Integration API.
+3. To assist users of the Claude Dev extension in reporting shell integration-related issues.
 
-\!\[feature X\]\(images/feature-x.png\)
+## How to Use This Extension
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+### Setup
 
-## Requirements
+1. Clone this repository:
+    ```
+    git clone https://github.com/saoudrizwan/shell-integration-problems.git
+    ```
+2. Open the cloned folder in VSCode.
+3. Install the necessary dependencies:
+    ```
+    npm install
+    ```
+4. Press F5 to run the extension in a new VSCode window.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+### Using the Extension
 
-## Extension Settings
+The extension provides two commands:
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+1. `shell-integration-problems: Run in New Terminal`
+2. `shell-integration-problems: Run in Last Used Terminal`
 
-For example:
+You can access these commands through the Command Palette (Ctrl+Shift+P or Cmd+Shift+P).
 
-This extension contributes the following settings:
+### Observing Results
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+1. Open the Debug Console to see more detailed logs.
+2. Run the commands and observe the output in this panel.
 
-## Known Issues
+Additionally,
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+[Placeholder for Debug Console screenshot]
 
-## Release Notes
+## Reporting Issues
 
-Users appreciate release notes as you update your extension.
+If you encounter any problems or unexpected behavior:
 
-### 1.0.0
+1. Go to the [Issues](https://github.com/saoudrizwan/shell-integration-problems/issues) page of this repository.
+2. Click on "New Issue".
+3. Provide a clear title and description of the problem.
+4. Include the following information:
+    - Your operating system and version
+    - Your VSCode version
+    - The exact steps to reproduce the issue
+    - Any relevant output from the Debug Console
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Your contributions will help improve the Shell Integration API and the Claude Dev extension. Thank you for your help!

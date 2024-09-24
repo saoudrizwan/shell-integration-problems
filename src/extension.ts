@@ -11,7 +11,7 @@ Resources:
 - https://github.com/microsoft/vscode/blob/f0417069c62e20f3667506f4b7e53ca0004b4e3e/src/vscode-dts/vscode.d.ts#L10743-L10794
 */
 
-const terminalProfileName = "Shell-Integration-Problems"
+const terminalProfileName = "shell-integration-problems"
 
 export function activate(context: vscode.ExtensionContext) {
 	let lastUsedTerminal: vscode.Terminal | undefined
@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
 		terminal.show()
 		try {
 			console.log("Waiting for shell integration...")
-			await waitFor(() => !!terminal.shellIntegration, { interval: 100, timeout: 10_000 })
+			await waitFor(() => !!terminal.shellIntegration, { interval: 200, timeout: 5_000 })
 			console.log("Shell integration available")
 			const execution = terminal.shellIntegration!.executeCommand(command)
 			console.log({ execution })
@@ -137,7 +137,7 @@ export function activate(context: vscode.ExtensionContext) {
 		})
 	)
 
-	console.log("Shell-Integration-Problems extension activated")
+	console.log("shell-integration-problems extension activated")
 }
 
 /**
@@ -171,5 +171,5 @@ function waitFor(
 }
 
 export function deactivate() {
-	console.log("Shell-Integration-Problems extension deactivated")
+	console.log("shell-integration-problems extension deactivated")
 }
