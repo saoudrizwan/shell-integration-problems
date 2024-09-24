@@ -14,8 +14,14 @@
   "contributes": {
     "commands": [
       {
-        "command": "shell-integration-problems.helloWorld",
-        "title": "Hello World"
+        "command": "shell-integration-example.runInNewTerminal",
+        "title": "Run in New Terminal",
+        "category": "Shell-Integration-Problems"
+      },
+      {
+        "command": "shell-integration-example.runInExistingTerminal",
+        "title": "Run in Existing Terminal",
+        "category": "Shell-Integration-Problems"
       }
     ]
   },
