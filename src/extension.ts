@@ -1,16 +1,28 @@
-import * as vscode from "vscode"
 import * as util from "util"
+import * as vscode from "vscode"
 import { logSystemInfo } from "./logSystemInfo"
 import { waitFor } from "./waitFor"
-/*
 
+/*
+This extension provides functionality to run shell commands in a VSCode terminal
+and interact with the Terminal Shell Integration API. It allows users to:
+
+1. Enter shell commands through an input box
+2. Execute these commands in a terminal
+3. Utilize shell integration features when available
+4. Fall back to basic text sending when shell integration is not available
+5. Log output and system information for debugging purposes
+
+The extension is designed to help reproduce and report issues related to
+VSCode's Terminal Shell Integration API, particularly for users of the
+Claude Dev extension experiencing shell integration problems.
 
 Resources:
-- v1.93 Terminal shell integration API: https://code.visualstudio.com/updates/v1_93#_terminal-shell-integration-api
+- v1.93 Terminal Shell Integration API: https://code.visualstudio.com/updates/v1_93#_terminal-shell-integration-api
 - vscode-extension-samples/terminal-sample: https://github.com/microsoft/vscode-extension-samples/blob/main/terminal-sample/src/extension.ts
 - vscode-extension-samples/shell-integration-sample: https://github.com/microsoft/vscode-extension-samples/blob/main/shell-integration-sample/src/extension.ts
 - vscode-extension-samples/extension-terminal-sample: https://github.com/microsoft/vscode-extension-samples/blob/main/extension-terminal-sample/src/extension.ts
-- https://github.com/microsoft/vscode/blob/f0417069c62e20f3667506f4b7e53ca0004b4e3e/src/vscode-dts/vscode.d.ts#L10743-L10794
+- Shell Integration API Types: https://github.com/microsoft/vscode/blob/f0417069c62e20f3667506f4b7e53ca0004b4e3e/src/vscode-dts/vscode.d.ts#L10743-L10794
 */
 
 export function activate(context: vscode.ExtensionContext) {
@@ -22,8 +34,10 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.commands.registerCommand("shell-integration-problems.runInTerminal", async () => {
 			let command = await vscode.window.showInputBox({ prompt: "Enter command to run in new terminal" })
 			if (!command) {
-				command = "date"
+				vscode.window.showErrorMessage("You must enter a shell command to run.")
+				return
 			}
+			console.log(`Running command: ${command}`)
 			const terminal =
 				lastUsedTerminal ??
 				vscode.window.createTerminal({
@@ -33,7 +47,7 @@ export function activate(context: vscode.ExtensionContext) {
 			terminal.show()
 			try {
 				console.log("Waiting for shell integration...")
-				await waitFor(() => !!terminal.shellIntegration, { interval: 200, timeout: 4_000 })
+				await waitFor(() => !!terminal.shellIntegration, { interval: 200, timeout: 5_000 })
 				console.log("Shell integration available")
 				const execution = terminal.shellIntegration!.executeCommand(command)
 				console.log({ execution })
@@ -52,31 +66,18 @@ export function activate(context: vscode.ExtensionContext) {
 	)
 
 	context.subscriptions.push(
-		/**
-		 * This will be fired when a terminal command is started. This event will fire only when
-		 * [shell integration](https://code.visualstudio.com/docs/terminal/shell-integration) is
-		 * activated for the terminal.
-		 */
 		vscode.window.onDidStartTerminalShellExecution(async (event) => {
 			console.log(`Shell execution started in terminal: ${event.terminal.name}`)
 		})
 	)
 
 	context.subscriptions.push(
-		/**
-		 * Fires when shell integration activates or one of its properties changes in a terminal.
-		 */
 		vscode.window.onDidChangeTerminalShellIntegration((event) => {
 			console.log(`Shell integration changed for terminal: ${event.terminal.name}`)
 		})
 	)
 
 	context.subscriptions.push(
-		/**
-		 * This will be fired when a terminal command is ended. This event will fire only when
-		 * [shell integration](https://code.visualstudio.com/docs/terminal/shell-integration) is
-		 * activated for the terminal.
-		 */
 		vscode.window.onDidEndTerminalShellExecution((event) => {
 			console.log(
 				`Shell execution ended in terminal ${event.terminal.name} with exit code ${
@@ -94,10 +95,4 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		})
 	)
-
-	console.log("shell-integration-problems extension activated")
-}
-
-export function deactivate() {
-	console.log("shell-integration-problems extension deactivated")
 }
