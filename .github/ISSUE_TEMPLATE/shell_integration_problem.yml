@@ -6,9 +6,9 @@ body:
           value: |
               Thanks for taking the time to fill out this report!
     - type: textarea
-      id: description
+      id: problem
       attributes:
-          label: Description
+          label: Problem
           description: Provide a clear description of the problem you're experiencing.
       validations:
           required: true
