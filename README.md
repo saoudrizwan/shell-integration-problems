@@ -85,7 +85,7 @@ If your command is specific to your original project where you used Claude Dev:
 
 ## 3. Observing Results and Submitting a Report
 
-1. Open the Debug Console in the primary window to see detailed logs.
+1. Open the Debug Console in the primary window to see console logs.
 2. Run the commands in the debugger window and observe the output in this panel.
 3. After reproducing the issue, right-click in the Debug Console and select "Copy All" to copy all logs.
 

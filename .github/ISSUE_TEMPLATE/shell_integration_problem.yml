@@ -1,5 +1,5 @@
 name: Report Shell Integration Problem
-description: File a report for Shell Integration problems
+description: Use this template to report problems with VSCode's Terminal Shell Integration API.
 body:
     - type: markdown
       attributes:
@@ -9,7 +9,7 @@ body:
       id: debug-console-logs
       attributes:
           label: Debug Console Logs
-          description: Please paste the console logs from the Debug Console.
+          description: Please paste the console logs from the Debug Console (Right-click and select "Copy All").
           render: shell
       validations:
           required: true
@@ -17,4 +17,4 @@ body:
       id: additional-information
       attributes:
           label: Additional Information
-          description: Add any other details about the problems here.
+          description: Add any other relevant details here.
