@@ -88,11 +88,11 @@ If your command is specific to your original project where you used Claude Dev:
 1. Open the Debug Console in the primary window to see console logs.
 2. Run the commands in the debugger window and observe the output in the Debug Console. Note that the "Read chunk" data will contain raw terminal output. For example, you might see:
 
--   Escape characters: `\x1B` or `\033`
--   ANSI color codes: `\x1B[31m` (red text)
--   Command sequences: `\x1B]633;C\x07` (shell integration markers)
+    - Escape characters: `\x1B` or `\033`
+    - ANSI color codes: `\x1B[31m` (red text)
+    - Command sequences: `\x1B]633;C\x07` (shell integration markers)
 
-These raw outputs are typically parsed and stripped out by extensions like Claude Dev, which is why you wouldn't see them in the processed output. In this debugging context, however, seeing the raw output is useful for diagnosing shell integration issues.
+    These raw outputs are typically parsed and stripped out by extensions like Claude Dev, which is why you wouldn't see them in the processed output. In this debugging context, however, seeing the raw output is useful for diagnosing shell integration issues.
 
 3. After reproducing the issue, right-click in the Debug Console and select "Copy All" to copy all logs.
 
