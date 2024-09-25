@@ -65,6 +65,8 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.window.onDidStartTerminalShellExecution(async (event) => {
 			console.log(`Shell execution started in terminal ${event.terminal.name}`)
+			// Creating a read stream here results in a more consistent output from the read stream above. This is most obvious when running the `date` command.
+			event.execution.read()
 		})
 	)
 
