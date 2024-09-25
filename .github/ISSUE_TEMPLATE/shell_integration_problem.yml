@@ -1,15 +1,14 @@
-name: Bug Report
-description: File a bug report for Shell Integration Problems
-labels: ["bug"]
+name: Report Shell Integration Problem
+description: File a report for Shell Integration problems
 body:
     - type: markdown
       attributes:
           value: |
-              Thanks for taking the time to fill out this bug report!
+              Thanks for taking the time to fill out this report!
     - type: textarea
-      id: command-results
+      id: debug-console-logs
       attributes:
-          label: Extension Logs
+          label: Debug Console Logs
           description: Please paste the console logs from the Debug Console.
           render: shell
       validations:
@@ -18,4 +17,4 @@ body:
       id: additional-information
       attributes:
           label: Additional Information
-          description: Add any other details about the problem here.
+          description: Add any other details about the problems here.

@@ -3,6 +3,17 @@ import { execSync } from "child_process"
 import * as os from "os"
 import * as path from "path"
 
+/**
+ * This function logs various system details:
+ * - Operating System information (platform, release, type, architecture)
+ * - Shell information (name, path, version)
+ * - Node.js version
+ * - VSCode version
+ *
+ * The collected information is useful for troubleshooting and providing context
+ * when reporting issues related to shell integration or other system-dependent
+ * functionalities.
+ */
 export async function logSystemInfo() {
 	let info = ""
 
@@ -48,11 +59,11 @@ export async function logSystemInfo() {
 		info += `Shell Version: Unable to determine (${JSON.stringify(error)})\n`
 	}
 
-	// Get VSCode version
-	info += `VSCode Version: ${vscode.version}\n`
-
 	// Get Node.js version
 	info += `Node.js Version: ${process.version}\n`
+
+	// Get VSCode version
+	info += `VSCode Version: ${vscode.version}\n`
 
 	console.log(info)
 }

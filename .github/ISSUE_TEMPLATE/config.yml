@@ -1,1 +1,5 @@
 blank_issues_enabled: false
+contact_links:
+    - name: Report Shell Integration Problem
+      url: https://github.com/saoudrizwan/shell-integration-problems/issues/new?template=shell_integration_problem.yml
+      about: Use this template to report issues with VSCode's Terminal Shell Integration API.

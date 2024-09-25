@@ -24,7 +24,6 @@ Resources:
 - vscode-extension-samples/extension-terminal-sample: https://github.com/microsoft/vscode-extension-samples/blob/main/extension-terminal-sample/src/extension.ts
 - Shell Integration API Types: https://github.com/microsoft/vscode/blob/f0417069c62e20f3667506f4b7e53ca0004b4e3e/src/vscode-dts/vscode.d.ts#L10743-L10794
 */
-
 export function activate(context: vscode.ExtensionContext) {
 	let lastUsedTerminal: vscode.Terminal | undefined
 
@@ -32,9 +31,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand("shell-integration-problems.runInTerminal", async () => {
-			let command = await vscode.window.showInputBox({ prompt: "Enter command to run in new terminal" })
+			let command = await vscode.window.showInputBox({ prompt: "Enter command to run in the terminal" })
 			if (!command) {
-				vscode.window.showErrorMessage("You must enter a shell command to run.")
 				return
 			}
 			console.log(`Running command: ${command}`)
