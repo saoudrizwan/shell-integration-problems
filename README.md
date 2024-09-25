@@ -91,8 +91,8 @@ If your command is specific to your original project where you used Claude Dev:
 
 ![Debug Console Screenshot](https://github.com/user-attachments/assets/cdf046e2-eb8c-4386-82ba-f70a2e5daef3)
 
-5. Go to the [Report Shell Integration Problem](https://github.com/saoudrizwan/shell-integration-problems/issues/new?template=shell_integration_problem.yml) page.
-6. Fill out the issue form with the following information:
+4. Go to the [Report Shell Integration Problem](https://github.com/saoudrizwan/shell-integration-problems/issues/new?template=shell_integration_problem.yml) page.
+5. Fill out the issue form with the following information:
     - Debug Console Logs: Paste the console logs from the Debug Console for the commands you ran.
     - Additional Information: Provide any other relevant details about the issue.
 
