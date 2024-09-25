@@ -48,7 +48,6 @@ export function activate(context: vscode.ExtensionContext) {
 				await waitFor(() => !!terminal.shellIntegration, { interval: 200, timeout: 5_000 })
 				console.log("Shell integration available")
 				const execution = terminal.shellIntegration!.executeCommand(command)
-				console.log({ execution })
 				const stream = execution.read()
 				for await (const chunk of stream) {
 					console.log("Read chunk:", util.inspect(chunk))
