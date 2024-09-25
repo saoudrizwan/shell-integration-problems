@@ -14,13 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "shell-integration-problems.runInNewTerminal",
-        "title": "Run in New Terminal",
-        "category": "shell-integration-problems"
-      },
-      {
-        "command": "shell-integration-problems.runInLastUsedTerminal",
-        "title": "Run in Last Used Terminal",
+        "command": "shell-integration-problems.runInTerminal",
+        "title": "Run in Terminal",
         "category": "shell-integration-problems"
       }
     ]
