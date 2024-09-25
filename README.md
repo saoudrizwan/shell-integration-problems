@@ -1,6 +1,6 @@
 # Shell Integration Problems
 
-This repository provides a minimal reproducible environment to help report issues with VSCode 1.93's new [Terminal Shell Integration API](https://code.visualstudio.com/updates/v1_93#_terminal-shell-integration-api). It aims to assist the VSCode team in improving the API, and was created for users of the [Claude Dev extension](https://github.com/saoudrizwan/claude-dev) experiencing shell integration problems.
+This repository provides a minimal reproducible environment to help report issues with VSCode 1.93's new [Terminal Shell Integration API](https://code.visualstudio.com/updates/v1_93#_terminal-shell-integration-api). It aims to assist the VSCode team in improving the API, and was created for users of the [Claude Dev extension](https://github.com/saoudrizwan/claude-dev) experiencing shell integration problems ("Shell Integration Unavailable" error, no output streamed back to extension, etc.).
 
 1. [Prerequisite: Basic Shell Integration Troubleshooting](#1-prerequisite-basic-shell-integration-troubleshooting)
 2. [Reproducing Shell Integration Problems with This Extension](#2-reproducing-shell-integration-problems-with-this-extension)
