@@ -8,10 +8,8 @@ This extension provides functionality to run shell commands in a VSCode terminal
 and interact with the Terminal Shell Integration API. It allows users to:
 
 1. Enter shell commands through an input box
-2. Execute these commands in a terminal
-3. Utilize shell integration features when available
-4. Fall back to basic text sending when shell integration is not available
-5. Log output and system information for debugging purposes
+2. Execute these commands using shell integration
+3. Log output and system information for debugging purposes
 
 The extension is designed to help reproduce and report issues related to
 VSCode's Terminal Shell Integration API, particularly for users of the
@@ -53,9 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
 					console.log("Read chunk:", util.inspect(chunk))
 				}
 			} catch (error) {
-				console.error("Timed out waiting for shell integration, falling back to sendText")
-				terminal.sendText(command)
-				console.log(`Command "${command}" sent to terminal without shell integration`)
+				console.error("Shell integration is not available")
 			} finally {
 				lastUsedTerminal = terminal
 			}

@@ -39,7 +39,7 @@ If you're still experiencing issues, try the following additional steps:
         - Confirm the Change by typing `Y` and pressing Enter when prompted.
         - Verify the Policy Change by running `Get-ExecutionPolicy` again to confirm the new setting.
         - Restart VSCode and try the shell integration again.
-6. If you're still experiencing issues after trying the basic troubleshooting steps, you can try [manually installing](https://code.visualstudio.com/docs/terminal/shell-integration#_manual-installation) shell integration.
+6. If you're still experiencing issues with shell integration not being available, you can try [manually installing](https://code.visualstudio.com/docs/terminal/shell-integration#_manual-installation) shell integration.
 
     For example, if you use zsh:
 
