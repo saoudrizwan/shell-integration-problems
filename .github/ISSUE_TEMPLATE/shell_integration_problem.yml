@@ -6,6 +6,13 @@ body:
           value: |
               Thanks for taking the time to fill out this report!
     - type: textarea
+      id: description
+      attributes:
+          label: Description
+          description: Provide a clear description of the problem you're experiencing.
+      validations:
+          required: true
+    - type: textarea
       id: debug-console-logs
       attributes:
           label: Debug Console Logs
@@ -13,8 +20,3 @@ body:
           render: shell
       validations:
           required: true
-    - type: textarea
-      id: additional-information
-      attributes:
-          label: Additional Information
-          description: Add any other relevant details here.
