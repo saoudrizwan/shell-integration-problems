@@ -64,13 +64,13 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(
 		vscode.window.onDidStartTerminalShellExecution(async (event) => {
-			console.log(`Shell execution started in terminal: ${event.terminal.name}`)
+			console.log(`Shell execution started in terminal ${event.terminal.name}`)
 		})
 	)
 
 	context.subscriptions.push(
 		vscode.window.onDidChangeTerminalShellIntegration((event) => {
-			console.log(`Shell integration changed for terminal: ${event.terminal.name}`)
+			console.log(`Shell integration changed for terminal ${event.terminal.name}`)
 		})
 	)
 
