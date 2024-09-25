@@ -93,7 +93,7 @@ If your command is specific to your original project where you used Claude Dev:
 
 4. Go to the [Report Shell Integration Problem](https://github.com/saoudrizwan/shell-integration-problems/issues/new?template=shell_integration_problem.yml) page.
 5. Fill out the issue form with the following information:
-    - Debug Console Logs: Paste the console logs from the Debug Console for the commands you ran.
+    - Debug Console Logs: Paste the console logs from the Debug Console.
     - Additional Information: Provide any other relevant details about the issue.
 
 Your report will help improve the Shell Integration API and the Claude Dev extension. Thank you for your help!
